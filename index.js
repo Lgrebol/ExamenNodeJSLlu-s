@@ -18,49 +18,51 @@ app.listen(PORT, () => {
 function llegirProductes() {
   try {
     const data = fs.readFileSync('productes.json', 'utf8');
-    const productes = JSON.parse(data);
-    return productes;
+    return JSON.parse(data);
   } catch (error) {
     console.error('Error llegint el fitxer JSON:', error);
     return [];
   }
 }
 
-// Tasca 2: Mostrar un producte segons ID
-function mostrarProducte(producte){
-    app.get('/producte/:id', (req, res) => {
-        const productes = llegirProductes();
-        const producte = productes.find(p => p.id === parseInt(req.params.id));
-        if (!producte) {
-          return res.status(404).send('Producte no trobat');
-        }
-        res.send(producte);
-      });
+// Tasca 2: Funció per mostrar un sol producte a la consola
+function mostrarProducte(producte) {
+  console.log(`Nom: ${producte.nom}`);
+  console.log(`Marca: ${producte.marca}`);
+  console.log(`Categoria: ${producte.categoria}`);
+  console.log(`Preu: ${producte.preu}`);
+  console.log(`Disponibilitat: ${producte.disponibilitat}`);
+  console.log(`Caracteristiques: ${JSON.stringify(producte.caracteristiques)}`);
 }
 
-// Tasca 3: Mostrar la llista de productes
-function mostrarProductes(productes){
-    app.get('/productes', (req, res) => {
-        const productes = llegirProductes();
-        res.send(productes);
-      });
-}
-
-// Tasca 5 Exemple d'ús
-try {
+// Tasca 3: Mostrar la llista de productes al navegador
+app.get('/productes', (req, res) => {
   const productes = llegirProductes();
-  console.log("Llista de productes:", productes);
+  res.send(productes);
+});
 
-// Tasca 4 Mostrar productes segons id
-function mostrarProducteID(productes, id){
-    app.get('/exemple/producte/:id', (req, res) => {
-        const producte = productes.find(p => p.id === parseInt(req.params.id));
-        if (!producte) {
-          return res.status(404).send('Producte no trobat');
-        }
-        res.send(producte);
-      });
-    } catch (error) {
-      console.error('Error llegint el fitxer en l\'exemple:', error);
-    }
-};
+// Tasca 4: Mostrar un producte segons ID
+app.get('/producte/:id', (req, res) => {
+  const productes = llegirProductes();
+  const producte = productes.find(p => p.id === parseInt(req.params.id));
+  if (!producte) {
+    return res.status(404).send('Producte no trobat');
+  }
+  res.send(producte);
+});
+
+// Tasca 5: Exemple d'ús de mostrarProducteID amb un ID específic
+function mostrarProducteID(id) {
+  const productes = llegirProductes();
+  const producte = productes.find(p => p.id === id);
+  if (producte) {
+    mostrarProducte(producte); 
+  } else {
+    console.log('Producte no trobat');
+  }
+}
+
+llegirProductes
+mostrarProducte
+mostrarProducteID(1);
+
