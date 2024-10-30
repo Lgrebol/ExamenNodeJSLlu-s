@@ -49,8 +49,19 @@ app.get('/producte/:id', (req, res) => {
     res.send(producte);
 });
 
+//Tasca 3 Mostrar la llista de productes 
+app.get('/producte/:id -l', (req, res) => {
+    const productes = llegirProductes();
+    res.send(productes);
+});
 
+// Tasca 4 Mostrar producte segons ID
 
+app.get('/producte/:id', (req, res) => {
 
+    const producte = productes.find(p => p.id === parseInt(req.params.id));
+
+    if (!producte) {
+    }
 
 
