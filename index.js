@@ -47,8 +47,8 @@ function mostrarProducteID(id) {
   const productes = llegirProductes();
   const producte = productes.find(p => p.id === id);
   if (producte) {
-    console.log(`\nMostrant producte amb ID: ${id}`);
-    mostrarProducte(producte); // Print product details to console
+    console.log(`\n Mostrant producte amb ID: ${id}`);
+    mostrarProducte(producte);
   } else {
     console.log(`Producte amb ID: ${id} no trobat`);
   }
