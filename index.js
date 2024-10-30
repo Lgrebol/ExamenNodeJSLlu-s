@@ -25,44 +25,35 @@ function llegirProductes() {
   }
 }
 
-// Tasca 2: Funció per mostrar un sol producte a la consola
+// Tasca 2: Mostrar un producte que rebi un objecte producte i mostri per consola
 function mostrarProducte(producte) {
   console.log(`Nom: ${producte.nom}`);
   console.log(`Marca: ${producte.marca}`);
   console.log(`Categoria: ${producte.categoria}`);
   console.log(`Preu: ${producte.preu}`);
   console.log(`Disponibilitat: ${producte.disponibilitat}`);
-  console.log(`Caracteristiques: ${JSON.stringify(producte.caracteristiques)}`);
+  console.log(`Caracteristiques: ${JSON.stringify(producte.caracteristiques, null, 2)}`);
 }
 
-// Tasca 3: Mostrar la llista de productes al navegador
-app.get('/productes', (req, res) => {
+// Tasca 3: Mostrar la llista de productes i imprimir-ho a la consola
+function mostrarLlistaProductes() {
   const productes = llegirProductes();
-  res.send(productes);
-});
+  console.log('Llista de productes:');
+  productes.forEach(producte => mostrarProducte(producte));
+}
 
-// Tasca 4: Mostrar un producte segons ID
-app.get('/producte/:id', (req, res) => {
-  const productes = llegirProductes();
-  const producte = productes.find(p => p.id === parseInt(req.params.id));
-  if (!producte) {
-    return res.status(404).send('Producte no trobat');
-  }
-  res.send(producte);
-});
-
-// Tasca 5: Exemple d'ús de mostrarProducteID amb un ID específic
+// Tasca 4: Mostrar producte per ID
 function mostrarProducteID(id) {
   const productes = llegirProductes();
   const producte = productes.find(p => p.id === id);
   if (producte) {
-    mostrarProducte(producte); 
+    console.log(`\nMostrant producte amb ID: ${id}`);
+    mostrarProducte(producte); // Print product details to console
   } else {
-    console.log('Producte no trobat');
+    console.log(`Producte amb ID: ${id} no trobat`);
   }
 }
 
-llegirProductes
+mostrarLlistaProductes();
 mostrarProducte
-mostrarProducteID(1);
-
+mostrarProducteID(1); 
